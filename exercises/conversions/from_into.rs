@@ -45,15 +45,16 @@ impl From<&str> for Person {
         if split.len() != 2 {
             return Person::default();
         }
-        let name = match split.get(0) {
-            Some(n) if !n.is_empty() => n.to_string(),
-            _ => return Person::default(),
-        };
-        let age = match split.get(1).unwrap().parse() {
-            Ok(a) => a,
-            Err(_) => return Person::default(),
-        };
-        Person { name, age }
+        Person {
+            name: match split[0] {
+                n if !n.is_empty() => n.to_string(),
+                _ => return Person::default(),
+            },
+            age: match split[1].parse() {
+                Ok(a) => a,
+                Err(_) => return Person::default(),
+            },
+        }
     }
 }
 

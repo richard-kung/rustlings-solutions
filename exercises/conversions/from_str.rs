@@ -52,15 +52,16 @@ impl FromStr for Person {
         if split.len() != 2 {
             return Err(ParsePersonError::BadLen);
         }
-        let name = match split.get(0) {
-            Some(n) if !n.is_empty() => n.to_string(),
-            _ => return Err(ParsePersonError::NoName),
-        };
-        let age = match split.get(1).unwrap().parse() {
-            Ok(a) => a,
-            Err(e) => return Err(ParsePersonError::ParseInt(e)),
-        };
-        Ok(Person { name, age })
+        Ok(Person {
+            name: match split[0] {
+                n if !n.is_empty() => n.to_string(),
+                _ => return Err(ParsePersonError::NoName),
+            },
+            age: match split[1].parse() {
+                Ok(a) => a,
+                Err(e) => return Err(ParsePersonError::ParseInt(e)),
+            },
+        })
     }
 }
 

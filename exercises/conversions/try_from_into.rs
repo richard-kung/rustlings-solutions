@@ -52,7 +52,8 @@ impl TryFrom<(i16, i16, i16)> for Color {
 impl TryFrom<[i16; 3]> for Color {
     type Error = IntoColorError;
     fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
-        (arr[0], arr[1], arr[2]).try_into()
+        Color::try_from((arr[0], arr[1], arr[2]))
+        // same as (arr[0], arr[1], arr[2]).try_into()
     }
 }
 
@@ -63,7 +64,7 @@ impl TryFrom<&[i16]> for Color {
         if slice.len() != 3 {
             return Err(IntoColorError::BadLen);
         }
-        (slice[0], slice[1], slice[2]).try_into()
+        Color::try_from((slice[0], slice[1], slice[2]))
     }
 }
 
